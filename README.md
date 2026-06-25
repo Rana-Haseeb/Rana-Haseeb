@@ -96,23 +96,11 @@ class Haseeb:
   <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rana-Haseeb&layout=compact&hide_border=true&langs_count=8&title_color=a55eea&text_color=c9d1d9&bg_color=0d1117" alt="top langs" />
 </div>
 
-<!-- ===================== PROFILE SUMMARY CARDS ===================== -->
-## 🪄 Profile Summary
-
-<div align="center">
-  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/0-profile-details.svg" alt="profile details" />
-</div>
-
-<div align="center">
-  <img width="49%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/4-productive-time.svg" alt="productive time" />
-  <img width="49%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/1-repos-per-language.svg" alt="repos per language" />
-</div>
-
 <!-- ===================== 3D SKYLINE ===================== -->
-## 🏙️ My Contribution Skyline (3D)
+## 🏙️ Contribution Skyline
 
 <div align="center">
-  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-3d-contrib/profile-gitblock.svg" alt="3D contribution skyline" />
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-3d-contrib/profile-gitblock-dark.svg" alt="3D contribution skyline" />
 </div>
 
 <!-- ===================== SNAKE ===================== -->
