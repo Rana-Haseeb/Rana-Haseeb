@@ -21,10 +21,18 @@ jobs:
           USERNAME: ${{ github.repository_owner }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Create dark-themed skyline
+        run: |
+          sed -e 's/#ffffff/#0d1117/g' \
+              -e 's/#f8f8f8/#161b22/g' \
+              -e 's/#aaaaaa/#21262d/g' \
+              -e 's/#00000f/#e6edf3/g' \
+              profile-3d-contrib/profile-gitblock.svg > profile-3d-contrib/profile-gitblock-dark.svg
+
       - name: Commit & push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: update 3d contribution calendar"
+          commit_message: "chore: update 3d contribution skyline"
           file_pattern: "profile-3d-contrib/*.svg"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
