@@ -28,24 +28,24 @@
 <!-- ===================== ABOUT ===================== -->
 ## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30"> About Me
 
+<img align="right" width="350" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
+
 ```python
 class Haseeb:
     def __init__(self):
-        self.name  = "Rana Muhammad Haseeb Khan"
-        self.role  = "Software Engineer & AI/ML Enthusiast"
+        self.name  = "Rana M Haseeb Khan"
+        self.role  = "Software Engineer"
         self.base  = "Pakistan (UTC +05:00)"
-        self.focus = ["C++ & DSA", "Full-Stack Web", "AI / Machine Learning"]
-        self.learn = ["Deep Learning", "LLMs & Generative AI", "MLOps"]
-        self.stack = ["MERN", "Next.js", "Python", "TensorFlow", "PyTorch"]
-        self.motto = "Build intelligent things, ship them, repeat."
+        self.code  = ["C++", "Python", "JS/TS"]
+        self.focus = ["AI/ML", "Full-Stack"]
+        self.learn = ["Deep Learning", "LLMs"]
+        self.tools = ["MERN", "PyTorch"]
+        self.motto = "Build smart, ship fast."
 ```
 
-<img align="right" width="370" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
-
-- 🎓 &nbsp;Computer Science student obsessed with **clean code** & **intelligent systems**
-- 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini-driven CSV analyzer**
+- 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini CSV analyzer**
 - 🧠 &nbsp;Diving deep into **Machine Learning, Deep Learning & LLMs**
-- 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js, Python)
+- 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js)
 - 🚀 &nbsp;**9+ live deployed projects** — explore the showcase below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 
@@ -96,11 +96,16 @@ class Haseeb:
   <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rana-Haseeb&layout=compact&hide_border=true&langs_count=8&title_color=a55eea&text_color=c9d1d9&bg_color=0d1117" alt="top langs" />
 </div>
 
-<!-- ===================== 3D CALENDAR ===================== -->
-## 🌌 My Year in 3D
+<!-- ===================== PROFILE SUMMARY CARDS ===================== -->
+## 🪄 Profile Summary
 
 <div align="center">
-  <img width="95%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-3d-contrib/profile-night-rainbow.svg" alt="3D contributions" />
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/0-profile-details.svg" alt="profile details" />
+</div>
+
+<div align="center">
+  <img width="49%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/4-productive-time.svg" alt="productive time" />
+  <img width="49%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/1-repos-per-language.svg" alt="repos per language" />
 </div>
 
 <!-- ===================== SNAKE ===================== -->
