@@ -108,6 +108,13 @@ class Haseeb:
   <img width="49%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-summary-card-output/radical/1-repos-per-language.svg" alt="repos per language" />
 </div>
 
+<!-- ===================== 3D SKYLINE ===================== -->
+## 🏙️ My Contribution Skyline (3D)
+
+<div align="center">
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-3d-contrib/profile-gitblock.svg" alt="3D contribution skyline" />
+</div>
+
 <!-- ===================== SNAKE ===================== -->
 ## 🐍 Watch the Snake Eat My Contributions
 
