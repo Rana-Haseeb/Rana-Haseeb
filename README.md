@@ -22,12 +22,11 @@
   </a>
 </div>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:6c5ce7,50:a55eea,100:22d3ee&height=3" alt="divider" />
+<!-- pac-man divider (spot 1) -->
+<img width="100%" src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" alt="divider" />
 
 <!-- ===================== ABOUT ===================== -->
 ## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30"> About Me
-
-<img align="right" width="380" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
 
 ```python
 class Haseeb:
@@ -40,6 +39,8 @@ class Haseeb:
         self.stack = ["MERN", "Next.js", "Python", "TensorFlow", "PyTorch"]
         self.motto = "Build intelligent things, ship them, repeat."
 ```
+
+<img align="right" width="370" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
 
 - 🎓 &nbsp;Computer Science student obsessed with **clean code** & **intelligent systems**
 - 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini-driven CSV analyzer**
@@ -116,7 +117,8 @@ class Haseeb:
   <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Rana-Haseeb&bg_color=0d1117&color=a55eea&line=22d3ee&point=ffffff&area=true&hide_border=true" alt="activity graph" />
 </div>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:6c5ce7,50:a55eea,100:22d3ee&height=3" alt="divider" />
+<!-- pac-man divider (spot 2) -->
+<img width="100%" src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" alt="divider" />
 
 <!-- ===================== FEATURED PROJECTS ===================== -->
 ## 🌟 Featured Projects
