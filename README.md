@@ -166,5 +166,12 @@ class Haseeb:
   <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=18&pause=1000&color=22D3EE&center=true&vCenter=true&width=520&lines=Thanks+for+visiting!+%E2%AD%90;Let's+build+something+intelligent+together!" alt="outro" />
 </div>
 
+<!-- ===================== COPYRIGHT ===================== -->
+<div align="center">
+
+<sub>© 2026 <b>Rana Muhammad Haseeb Khan</b> · All rights reserved · — Designed & built with care 💜</sub>
+
+</div>
+
 <!-- ===================== FOOTER ===================== -->
 <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:22d3ee,50:a55eea,100:6c5ce7&height=120&section=footer" alt="footer" />
