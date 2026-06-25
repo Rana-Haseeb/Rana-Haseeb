@@ -79,15 +79,6 @@ const haseeb: Developer = {
 
 <br/>
 
-<!-- ===================== TROPHIES ===================== -->
-## 🏆 GitHub Trophies
-
-<div align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=Rana-Haseeb&theme=algolia&no-frame=true&no-bg=true&margin-w=4&column=7" alt="trophies" />
-</div>
-
-<br/>
-
 <!-- ===================== ACTIVITY GRAPH ===================== -->
 ## 📈 Contribution Graph
 
