@@ -1,16 +1,16 @@
 <!-- ===================== HEADER ===================== -->
 <a href="https://github.com/Rana-Haseeb">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:6c5ce7,50:a55eea,100:22d3ee&height=230&section=header&text=Rana%20Muhammad%20Haseeb%20Khan&fontSize=40&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=Aspiring%20Software%20Engineer%20%E2%80%A2%20Full-Stack%20Developer%20%E2%80%A2%20Problem%20Solver&descAlignY=56&descSize=18" alt="header" />
+  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:6c5ce7,50:a55eea,100:22d3ee&height=240&section=header&text=Rana%20Muhammad%20Haseeb%20Khan&fontSize=40&fontColor=ffffff&animation=twinkling&fontAlignY=34&desc=Aspiring%20Software%20Engineer%20%E2%80%A2%20Full-Stack%20Developer%20%E2%80%A2%20Problem%20Solver&descAlignY=54&descSize=18" alt="header" />
 </a>
 
 <!-- ===================== TYPING ===================== -->
 <div align="center">
   <a href="https://github.com/Rana-Haseeb">
-    <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=24&pause=1000&color=A55EEA&center=true&vCenter=true&width=620&height=45&lines=C%2B%2B+%26+Data+Structures+Enthusiast;OOP+%26+System+Design;Full-Stack+MERN+Developer;Next.js+%E2%80%A2+Python+%E2%80%A2+TypeScript;Turning+ideas+into+shipped+products+%F0%9F%9A%80" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=26&pause=1000&color=A55EEA&center=true&vCenter=true&width=650&height=50&lines=C%2B%2B+%26+Data+Structures+Enthusiast;OOP+%26+System+Design+Architect;Full-Stack+MERN+Developer;Next.js+%E2%80%A2+Python+%E2%80%A2+TypeScript;I+turn+caffeine+into+shipped+products+%E2%98%95%F0%9F%9A%80" alt="Typing SVG" />
   </a>
 </div>
 
-<!-- ===================== BADGES ROW ===================== -->
+<!-- ===================== BADGES ===================== -->
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=Rana-Haseeb&label=Profile%20Views&color=a55eea&style=for-the-badge" alt="views" />
   <img src="https://img.shields.io/github/followers/Rana-Haseeb?label=Followers&style=for-the-badge&color=6c5ce7&logo=github" alt="followers" />
@@ -22,50 +22,57 @@
   </a>
 </div>
 
-<br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
 
 <!-- ===================== ABOUT ===================== -->
-## 👨‍💻 About Me
+## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30"> About Me
+
+<img align="right" width="380" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
 
 ```ts
 const haseeb: Developer = {
   name: "Rana Muhammad Haseeb Khan",
   role: "Aspiring Software Engineer",
-  location: "Pakistan 🇵🇰 (UTC +05:00)",
+  location: "Pakistan (UTC +05:00)",
   focus: ["C++ & DSA", "OOP", "System Design", "Full-Stack Web"],
-  currentlyLearning: ["Next.js", "Cloud & DevOps", "Scalable Systems"],
+  learning: ["Next.js", "Cloud & DevOps", "Scalable Systems"],
   motto: "Build practical things, ship them, repeat.",
 };
 ```
 
-- 🎓 &nbsp;Computer Science student passionate about **clean code** & **system design**
-- 💻 &nbsp;I build **practical, production-style full-stack projects** (MERN, Next.js, Python)
-- 🌱 &nbsp;Sharpening my skills in **algorithms, architecture & scalable systems**
-- 🚀 &nbsp;**9+ live deployed projects** — see the showcase below
+- 🎓 &nbsp;Computer Science student obsessed with **clean code** & **system design**
+- 💻 &nbsp;I build **practical, production-style full-stack apps** (MERN, Next.js, Python)
+- 🌱 &nbsp;Leveling up in **algorithms, architecture & scalable systems**
+- 🚀 &nbsp;**9+ live deployed projects** — explore the showcase below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 - ⚡ &nbsp;Fun fact: *I treat every academic task like a real product launch.*
 
-<br/>
+<br clear="both"/>
+
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
 
 <!-- ===================== TECH STACK ===================== -->
-## 🛠️ Tech Stack & Tools
+## 🛠️ Tech Arsenal
 
 <div align="center">
 
-### Languages
+**Languages**
+<br/>
 <img src="https://skillicons.dev/icons?i=cpp,python,js,ts,html,css&theme=dark" alt="languages" />
 
-### Frameworks & Libraries
+**Frameworks & Libraries**
+<br/>
 <img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,express,tailwind,vite&theme=dark" alt="frameworks" />
 
-### Databases & Tools
+**Databases & Tools**
+<br/>
 <img src="https://skillicons.dev/icons?i=mongodb,mysql,git,github,vscode,postman&theme=dark" alt="tools" />
 
 </div>
 
-<br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
 
-<!-- ===================== GITHUB STATS ===================== -->
+<!-- ===================== STATS ===================== -->
 ## 📊 GitHub Analytics
 
 <div align="center">
@@ -77,7 +84,21 @@ const haseeb: Developer = {
   <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rana-Haseeb&layout=compact&hide_border=true&langs_count=8&title_color=a55eea&text_color=c9d1d9&bg_color=0d1117" alt="top langs" />
 </div>
 
-<br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
+
+<!-- ===================== 3D CALENDAR ===================== -->
+## 🌌 My Year in 3D
+
+<div align="center">
+  <img width="95%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/profile-3d-contrib/profile-night-rainbow.svg" alt="3D contributions" />
+</div>
+
+<!-- ===================== SNAKE ===================== -->
+## 🐍 Watch the Snake Eat My Contributions
+
+<div align="center">
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/output/github-snake-purple.svg" alt="snake animation" />
+</div>
 
 <!-- ===================== ACTIVITY GRAPH ===================== -->
 ## 📈 Contribution Graph
@@ -86,7 +107,7 @@ const haseeb: Developer = {
   <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Rana-Haseeb&bg_color=0d1117&color=a55eea&line=22d3ee&point=ffffff&area=true&hide_border=true" alt="activity graph" />
 </div>
 
-<br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
 
 <!-- ===================== FEATURED PROJECTS ===================== -->
 ## 🌟 Featured Projects
@@ -104,7 +125,14 @@ const haseeb: Developer = {
 
 </div>
 
-<br/>
+<img src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" width="100%" alt="divider" />
+
+<!-- ===================== QUOTE ===================== -->
+## 💭 Dev Quote of the Moment
+
+<div align="center">
+  <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical" alt="quote" />
+</div>
 
 <!-- ===================== CONNECT ===================== -->
 ## 🤝 Let's Connect
@@ -124,7 +152,7 @@ const haseeb: Developer = {
 <br/>
 
 <div align="center">
-  <i>⭐ From <b>Rana-Haseeb</b> — if you like my work, a star on my repos makes my day!</i>
+  <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=18&pause=1000&color=22D3EE&center=true&vCenter=true&width=500&lines=Thanks+for+visiting!+%E2%AD%90;Star+my+repos+if+you+like+them!" alt="outro" />
 </div>
 
 <!-- ===================== FOOTER ===================== -->
