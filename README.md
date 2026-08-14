@@ -46,7 +46,7 @@ class Haseeb:
 - 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini CSV analyzer**
 - 🧠 &nbsp;Diving deep into **Machine Learning, Deep Learning & LLMs**
 - 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js)
-- 🚀 &nbsp;**<!-- PROJECTCOUNT:START -->8<!-- PROJECTCOUNT:END --> live deployed projects** — a selection is showcased below
+- 🚀 &nbsp;**<!-- PROJECTCOUNT:START -->10<!-- PROJECTCOUNT:END --> live deployed projects** — a selection is showcased below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 
 <br clear="both"/>
@@ -141,16 +141,18 @@ class Haseeb:
 
 <!-- PROJECTS:START -->
 
-| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |
+| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Link |
 | :--- | :--- | :--- | :---: |
-| **Productivity Agent 2026** | LangGraph AI agent for task & note management, with human approval required... | `Python` `PLpgSQL` | [Demo](https://appuctivity-agent-2026.streamlit.app) |
-| **Portfolio** | A self-updating personal portfolio — reads your GitHub live and uses AI to... | `TypeScript` `CSS` `JavaScript` | [Demo](https://portfolio-omega-ten-84.vercel.app) |
-| **Multi Agent Research Platform** | Six specialised AI agents that research a question, argue about the answer,... | `Python` | [Demo](https://multi-agent-research-platform.streamlit.app) |
-| **AI Agent Fellowship 2026** | A unified Streamlit interface to chat with multiple AI models — personas, t... | `Python` | [Demo](https://ai-agent-fellowship-2026-b2wyhwrjxwapbkn67wd8ag.streamlit.app) |
-| **Blueprint Portfolio** | &mdash; | `TypeScript` `CSS` `JavaScript` | [Demo](https://blueprint-portfolio-omega.vercel.app) |
-| **Ai Task Management System** | TaskFlow — an AI-powered, real-time task management platform: a glassmorphi... | `TypeScript` `CSS` `JavaScript` | [Demo](https://ai-task-management-system-khaki.vercel.app) |
-| **Plume Realtime Messaging** | Plume — a real-time chat app (Next.js + Express + Socket.io + MongoDB) with... | `TypeScript` `CSS` `JavaScript` | [Demo](https://plume-realtime-messaging.vercel.app) |
-| **Link Shortener** | Zap — AI-powered link shortener. Paste a URL, get a tiny link with AI summa... | `JavaScript` `CSS` | [Demo](https://link-shortener-coral-zeta.vercel.app/) |
+| **🤖 AI CSV Analyzer** | Upload a CSV, get instant AI insights powered by Gemini | `JavaScript` `CSS` `HTML` | [Demo](https://ai-powered-csv-cleaner-summarizer.vercel.app) |
+| **🧠 Multi-Agent Research Platform** | Six AI agents research, debate, and cite every claim | `Python` | [Code](https://github.com/Rana-Haseeb/Multi-Agent-Research-Platform) |
+| **🗂️ Productivity Agent** | LangGraph agent with human approval before every write | `Python` `PLpgSQL` | [Code](https://github.com/Rana-Haseeb/productivity-agent-2026) |
+| **✨ Self-Updating Portfolio** | Reads GitHub live and writes up new projects with AI | `TypeScript` `CSS` `JavaScript` | [Demo](https://portfolio-omega-ten-84.vercel.app) |
+| **📋 TaskFlow** | Real-time glassmorphic Kanban board with threaded comments | `TypeScript` `CSS` `JavaScript` | [Demo](https://ai-task-management-system-khaki.vercel.app) |
+| **💬 Plume** | Real-time 1-on-1 and group chat over Socket.io | `TypeScript` `CSS` `JavaScript` | [Demo](https://plume-realtime-messaging.vercel.app) |
+| **🛒 Next.js Commerce** | Full-stack store with Auth.js credentials and a local cart | `TypeScript` `CSS` `JavaScript` | [Demo](https://nextjs-ecommerce-platform-ten.vercel.app/) |
+| **⚡ Zap** | Tiny links with AI summary, safety check and QR code | `JavaScript` `CSS` | [Demo](https://link-shortener-coral-zeta.vercel.app/) |
+| **💎 Finovo** | Premium expense tracker with live balance and analytics | `JavaScript` `CSS` `HTML` | [Demo](https://expense-tracker-mern-0vpm.onrender.com/) |
+| **🎬 CineSearch** | Cinema-grade movie discovery platform | `TypeScript` `CSS` `JavaScript` | [Demo](https://cine-vault-wine.vercel.app/) |
 
 <!-- PROJECTS:END -->
 
