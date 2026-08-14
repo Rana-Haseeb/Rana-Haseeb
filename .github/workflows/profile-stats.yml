@@ -34,17 +34,20 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Render stats cards
+      - name: Render cards, chrome and projects table
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
           OUT_DIR: assets
+          README_PATH: README.md
         run: python scripts/generate_profile_stats.py
 
+      # README is included because the generator rewrites the featured
+      # projects table between its marker comments.
       - name: Commit & push
         uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
         with:
-          commit_message: "chore: update profile stats cards"
-          file_pattern: "assets/*.svg"
+          commit_message: "chore: update profile cards and projects table"
+          file_pattern: "assets README.md"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"

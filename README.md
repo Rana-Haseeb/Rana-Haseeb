@@ -1,6 +1,6 @@
 <!-- ===================== HEADER ===================== -->
 <a href="https://github.com/Rana-Haseeb">
-  <img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:6c5ce7,50:a55eea,100:22d3ee&height=240&section=header&text=Rana%20Muhammad%20Haseeb%20Khan&fontSize=40&fontColor=ffffff&animation=twinkling&fontAlignY=34&desc=Software%20Engineer%20%E2%80%A2%20Full-Stack%20Developer%20%E2%80%A2%20AI%2FML%20Enthusiast&descAlignY=54&descSize=18" alt="header" />
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/banner.svg" alt="header" />
 </a>
 
 <!-- ===================== TYPING ===================== -->
@@ -23,12 +23,12 @@
 </div>
 
 <!-- pac-man divider (spot 1) -->
-<img width="100%" src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" alt="divider" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/divider-pacman.gif" alt="divider" />
 
 <!-- ===================== ABOUT ===================== -->
-## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="30"> About Me
+## <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/wave.gif" width="30"> About Me
 
-<img align="right" width="350" src="https://user-images.githubusercontent.com/74038190/229223263-cf2e4b07-2615-4f87-9c38-e37600f8381a.gif" alt="coding" />
+<img align="right" width="350" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/coding.gif" alt="coding" />
 
 ```python
 class Haseeb:
@@ -46,12 +46,12 @@ class Haseeb:
 - 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini CSV analyzer**
 - 🧠 &nbsp;Diving deep into **Machine Learning, Deep Learning & LLMs**
 - 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js)
-- 🚀 &nbsp;**9+ live deployed projects** — a selection is showcased below
+- 🚀 &nbsp;**<!-- PROJECTCOUNT:START -->9<!-- PROJECTCOUNT:END --> live deployed projects** — a selection is showcased below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 
 <br clear="both"/>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:6c5ce7,50:a55eea,100:22d3ee&height=3" alt="divider" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/divider.svg" alt="divider" />
 
 <!-- ===================== TECH STACK ===================== -->
 ## 🛠️ Tech Arsenal
@@ -82,7 +82,7 @@ class Haseeb:
 
 </div>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:6c5ce7,50:a55eea,100:22d3ee&height=3" alt="divider" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/divider.svg" alt="divider" />
 
 <!-- ===================== STATS ===================== -->
 ## 📊 GitHub Analytics
@@ -90,12 +90,21 @@ class Haseeb:
 <!-- Cards are generated daily by .github/workflows/profile-stats.yml and served
      from this repo, so they do not break when a third-party card service does. -->
 <div align="center">
-  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/stats.svg" alt="GitHub stats" />
-  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/streak.svg" alt="Contribution streak" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/stats.svg" />
+    <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/stats-light.svg" alt="GitHub stats" />
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/streak.svg" />
+    <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/streak-light.svg" alt="Contribution streak" />
+  </picture>
 </div>
 
 <div align="center">
-  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/top-langs.svg" alt="Most used languages" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/top-langs.svg" />
+    <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/top-langs-light.svg" alt="Most used languages" />
+  </picture>
 </div>
 
 <!-- ===================== 3D SKYLINE ===================== -->
@@ -116,16 +125,21 @@ class Haseeb:
 ## 📈 Contribution Graph
 
 <div align="center">
-  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/activity.svg" alt="Daily contributions over the last 31 days" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/activity.svg" />
+    <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/activity-light.svg" alt="Daily contributions over the last 31 days" />
+  </picture>
 </div>
 
 <!-- pac-man divider (spot 2) -->
-<img width="100%" src="https://user-images.githubusercontent.com/74038190/212284158-e840e285-664b-44d7-b79b-e264b5e54825.gif" alt="divider" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/divider-pacman.gif" alt="divider" />
 
 <!-- ===================== FEATURED PROJECTS ===================== -->
 ## 🌟 Featured Projects
 
 <div align="center">
+
+<!-- PROJECTS:START -->
 
 | 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |
 | :--- | :--- | :--- | :---: |
@@ -136,15 +150,20 @@ class Haseeb:
 | **📓 Digital Notebook** | Full-stack notes app with auth & cloud storage | `MERN` | [Demo](https://digital-notebook-pied.vercel.app/) |
 | **⛅ WeatherNow** | Responsive real-time weather & forecast app | `React` `Vite` | [Demo](https://city-weather-checker.vercel.app/) |
 
+<!-- PROJECTS:END -->
+
 </div>
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=rect&color=0:6c5ce7,50:a55eea,100:22d3ee&height=3" alt="divider" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/divider.svg" alt="divider" />
 
 <!-- ===================== QUOTE ===================== -->
 ## 💭 Dev Quote of the Moment
 
 <div align="center">
-  <img src="https://quotes-github-readme.vercel.app/api?type=horizontal&theme=radical" alt="quote" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/quote.svg" />
+    <img width="700" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/quote-light.svg" alt="Developer quote of the day" />
+  </picture>
 </div>
 
 <!-- ===================== CONNECT ===================== -->
@@ -176,4 +195,4 @@ class Haseeb:
 </div>
 
 <!-- ===================== FOOTER ===================== -->
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=0:22d3ee,50:a55eea,100:6c5ce7&height=120&section=footer" alt="footer" />
+<img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/footer.svg" alt="footer" />

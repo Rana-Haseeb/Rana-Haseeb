@@ -1,21 +1,27 @@
 #!/usr/bin/env python3
-"""Generate the profile's GitHub Analytics cards as static SVGs.
+"""Generate every rendered asset the profile README embeds.
 
-Replaces the third-party card services (github-readme-stats.vercel.app and
-github-readme-streak-stats) that the README used to embed. Those are shared
-public deployments; when they pause or hit GitHub's API limits the profile
-silently shows broken images. Everything here is rendered inside Actions with
-the automatic GITHUB_TOKEN and committed to the repo, so the cards can only
-break if this repo breaks.
+The README used to hotlink a handful of free single-maintainer deployments
+(github-readme-stats, github-readme-streak-stats, the activity graph,
+capsule-render, the quote widget). When one of those pauses, the profile
+shows broken images and nothing in the README can fix it - which is exactly
+what happened. Everything here is rendered inside Actions with the automatic
+GITHUB_TOKEN and committed, so these assets can only break if this repo does.
+
+Each card is emitted twice, dark and light, and the README picks between them
+with <picture> + prefers-color-scheme. Page chrome (banner, footer, divider)
+sits on a transparent ground, so one copy serves both themes.
 
 Env:
     GITHUB_TOKEN  automatic token provided by Actions
-    USERNAME      profile to render (defaults to the repo owner)
+    USERNAME      profile to render
     OUT_DIR       where the SVGs land (default: assets)
+    README_PATH   README to inject the projects table into (default: README.md)
 """
 
 import json
 import os
+import re
 import sys
 import urllib.error
 import urllib.request
@@ -23,21 +29,51 @@ from datetime import datetime, timedelta, timezone
 
 API = "https://api.github.com/graphql"
 
-# Matches the README's palette.
-BG = "#0d1117"
-BORDER = "#21262d"
-TITLE = "#a55eea"
-TEXT = "#c9d1d9"
-ACCENT = "#22d3ee"
-MUTED = "#8b949e"
+FONT = "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
 
-FONT = (
-    "-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif"
-)
+# Brand ramp, shared by the chrome in both themes.
+BRAND = ("#6c5ce7", "#a55eea", "#22d3ee")
+
+# suffix -> palette. "" is the dark default; cards are emitted for both.
+THEMES = {
+    "": {
+        "bg": "#0d1117",
+        "border": "#21262d",
+        "title": "#a55eea",
+        "text": "#c9d1d9",
+        "accent": "#22d3ee",
+        "muted": "#8b949e",
+    },
+    "-light": {
+        "bg": "#ffffff",
+        "border": "#d0d7de",
+        "title": "#6c5ce7",
+        "text": "#1f2328",
+        # The brand cyan is unreadable on white, so the light theme drops to
+        # a darker stop of the same hue.
+        "accent": "#0e7490",
+        "muted": "#656d76",
+    },
+}
+
+QUOTES = [
+    ("Simplicity is the soul of efficiency.", "Austin Freeman"),
+    ("Make it work, make it right, make it fast.", "Kent Beck"),
+    ("Programs must be written for people to read.", "Harold Abelson"),
+    ("The best error message is the one that never shows up.", "Thomas Fuchs"),
+    ("First, solve the problem. Then, write the code.", "John Johnson"),
+    ("Code is like humour. When you have to explain it, it is bad.", "Cory House"),
+    ("Premature optimization is the root of all evil.", "Donald Knuth"),
+    ("Talk is cheap. Show me the code.", "Linus Torvalds"),
+    ("Any fool can write code a computer understands.", "Martin Fowler"),
+    ("Deleted code is debugged code.", "Jeff Sickel"),
+    ("Testing shows the presence, not the absence of bugs.", "Edsger Dijkstra"),
+    ("Controlling complexity is the essence of programming.", "Brian Kernighan"),
+]
 
 
 def gql(query, variables):
-    """Run one GraphQL request, raising with a useful message on failure."""
+    """Run one GraphQL request, exiting with a useful message on failure."""
     token = os.environ.get("GITHUB_TOKEN")
     if not token:
         sys.exit("GITHUB_TOKEN is not set")
@@ -77,7 +113,11 @@ query($login: String!) {
     ) {
       totalCount
       nodes {
+        name
+        description
+        homepageUrl
         stargazerCount
+        pushedAt
         languages(first: 12, orderBy: {field: SIZE, direction: DESC}) {
           edges { size node { name color } }
         }
@@ -187,7 +227,7 @@ def top_languages(repos, limit=6):
         for edge in repo["languages"]["edges"]:
             name = edge["node"]["name"]
             sizes[name] = sizes.get(name, 0) + edge["size"]
-            colors[name] = edge["node"]["color"] or MUTED
+            colors[name] = edge["node"]["color"] or "#8b949e"
 
     ranked = sorted(sizes.items(), key=lambda kv: kv[1], reverse=True)[:limit]
     total = sum(size for _, size in ranked) or 1
@@ -212,17 +252,17 @@ def esc(s):
     )
 
 
-def frame(width, height, title, body):
+def frame(th, width, height, title, body):
     """Shared card chrome: rounded panel, border, title, fade-in."""
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
 viewBox="0 0 {width} {height}" role="img" aria-label="{esc(title)}">
   <title>{esc(title)}</title>
   <style>
-    .t {{ font: 600 16px {FONT}; fill: {TITLE}; }}
-    .k {{ font: 400 13px {FONT}; fill: {TEXT}; }}
-    .v {{ font: 700 13px {FONT}; fill: {ACCENT}; }}
-    .s {{ font: 400 11px {FONT}; fill: {MUTED}; }}
-    .n {{ font: 700 26px {FONT}; fill: {TEXT}; }}
+    .t {{ font: 600 16px {FONT}; fill: {th['title']}; }}
+    .k {{ font: 400 13px {FONT}; fill: {th['text']}; }}
+    .v {{ font: 700 13px {FONT}; fill: {th['accent']}; }}
+    .s {{ font: 400 11px {FONT}; fill: {th['muted']}; }}
+    .n {{ font: 700 26px {FONT}; fill: {th['text']}; }}
     .c {{ opacity: 0; animation: f .5s ease-out forwards; }}
     @keyframes f {{ to {{ opacity: 1; }} }}
     @media (prefers-reduced-motion: reduce) {{
@@ -230,14 +270,14 @@ viewBox="0 0 {width} {height}" role="img" aria-label="{esc(title)}">
     }}
   </style>
   <rect x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="6"
-        fill="{BG}" stroke="{BORDER}"/>
+        fill="{th['bg']}" stroke="{th['border']}"/>
   <text x="25" y="35" class="t">{esc(title)}</text>
 {body}
 </svg>
 """
 
 
-def render_stats(name, stars, totals, repo_count, followers):
+def render_stats(th, name, stars, totals, repo_count, followers):
     rows = [
         ("Total Stars Earned", stars),
         ("Total Commits", totals["commits"]),
@@ -252,18 +292,20 @@ def render_stats(name, stars, totals, repo_count, followers):
         delay = 0.1 + i * 0.08
         body.append(
             f'  <g class="c" style="animation-delay:{delay:.2f}s">'
-            f'<circle cx="30" cy="{y - 4}" r="3" fill="{ACCENT}"/>'
+            f'<circle cx="30" cy="{y - 4}" r="3" fill="{th["accent"]}"/>'
             f'<text x="45" y="{y}" class="k">{esc(label)}</text>'
             f'<text x="425" y="{y}" class="v" text-anchor="end">'
             f"{human(value)}</text></g>"
         )
-    return frame(450, 215, f"{name}'s GitHub Stats", "\n".join(body))
+    return frame(th, 450, 215, f"{name}'s GitHub Stats", "\n".join(body))
 
 
-def render_langs(langs):
+def render_langs(th, langs):
     if not langs:
-        return frame(340, 215, "Most Used Languages",
-                     f'  <text x="25" y="70" class="s">No language data</text>')
+        return frame(
+            th, 340, 215, "Most Used Languages",
+            '  <text x="25" y="70" class="s">No language data</text>',
+        )
 
     bar, x = [], 25.0
     width = 290.0
@@ -295,10 +337,10 @@ def render_langs(langs):
         f"</clipPath><g clip-path=\"url(#r)\">{''.join(bar)}</g></g>\n"
         + "\n".join(legend)
     )
-    return frame(340, 215, "Most Used Languages", body)
+    return frame(th, 340, 215, "Most Used Languages", body)
 
 
-def render_streak(total, current, longest, first_day, last_day):
+def render_streak(th, total, current, longest, first_day, last_day):
     cols = [
         (78, human(total), "Total Contributions", f"{first_day} - Present"),
         (225, str(current), "Current Streak", last_day),
@@ -309,7 +351,7 @@ def render_streak(total, current, longest, first_day, last_day):
         delay = 0.1 + i * 0.12
         ring = (
             f'<circle cx="{cx}" cy="95" r="40" fill="none" '
-            f'stroke="{ACCENT}" stroke-width="4"/>'
+            f'stroke="{th["accent"]}" stroke-width="4"/>'
             if i == 1
             else ""
         )
@@ -322,12 +364,12 @@ def render_streak(total, current, longest, first_day, last_day):
         )
     for x in (151, 298):
         body.append(
-            f'  <line x1="{x}" y1="55" x2="{x}" y2="160" stroke="{BORDER}"/>'
+            f'  <line x1="{x}" y1="55" x2="{x}" y2="160" stroke="{th["border"]}"/>'
         )
-    return frame(450, 215, "Contribution Streak", "\n".join(body))
+    return frame(th, 450, 215, "Contribution Streak", "\n".join(body))
 
 
-def render_activity(days, window=31):
+def render_activity(th, days, window=31):
     """Area chart of daily contributions across the trailing window."""
     today = datetime.now(timezone.utc).date()
     series = [
@@ -352,19 +394,19 @@ def render_activity(days, window=31):
         gy = top_pad + plot_h * (1 - frac)
         grid.append(
             f'  <line x1="{left}" y1="{gy:.1f}" x2="{width - right}" y2="{gy:.1f}" '
-            f'stroke="{BORDER}"/>'
+            f'stroke="{th["border"]}"/>'
             f'<text x="{left - 10}" y="{gy + 4:.1f}" class="s" text-anchor="end">'
             f"{round(peak * frac)}</text>"
         )
 
     points = " ".join(f"{px(i):.1f},{py(c):.1f}" for i, (_, c) in enumerate(series))
-    area = (
-        f"{left},{top_pad + plot_h} {points} "
-        f"{width - right},{top_pad + plot_h}"
-    )
+    area = f"{left},{top_pad + plot_h} {points} {width - right},{top_pad + plot_h}"
 
+    # Dot centres are filled with the card background so they read as rings in
+    # either theme; a white fill would vanish on the light card.
     dots = [
-        f'<circle cx="{px(i):.1f}" cy="{py(c):.1f}" r="2.5" fill="#ffffff"/>'
+        f'<circle cx="{px(i):.1f}" cy="{py(c):.1f}" r="2.5" fill="{th["bg"]}" '
+        f'stroke="{th["accent"]}" stroke-width="1.5"/>'
         for i, (_, c) in enumerate(series)
     ]
 
@@ -381,8 +423,8 @@ def render_activity(days, window=31):
         grid
         + [
             f'  <g class="c" style="animation-delay:.1s">'
-            f'<polygon points="{area}" fill="{TITLE}" fill-opacity="0.18"/>'
-            f'<polyline points="{points}" fill="none" stroke="{ACCENT}" '
+            f'<polygon points="{area}" fill="{th["title"]}" fill-opacity="0.18"/>'
+            f'<polyline points="{points}" fill="none" stroke="{th["accent"]}" '
             f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
             f'{"".join(dots)}</g>'
         ]
@@ -390,18 +432,168 @@ def render_activity(days, window=31):
     )
     total = sum(count for _, count in series)
     title = f"Contribution Graph - last {window} days ({total} contributions)"
-    return frame(width, height, title, body)
+    return frame(th, width, height, title, body)
+
+
+def render_quote(th, day):
+    """Rotate one quote per day, deterministically from the date."""
+    text, author = QUOTES[day.toordinal() % len(QUOTES)]
+    width, height = 700, 130
+    body = (
+        f'  <g class="c" style="animation-delay:.1s">'
+        f'<text x="{width // 2}" y="62" text-anchor="middle" '
+        f'style="font: 400 17px {FONT}; fill: {th["text"]}">'
+        f"&#8220;{esc(text)}&#8221;</text>"
+        f'<text x="{width // 2}" y="92" text-anchor="middle" '
+        f'style="font: 400 13px {FONT}; fill: {th["muted"]}">'
+        f"&#8212; {esc(author)}</text></g>"
+    )
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
+viewBox="0 0 {width} {height}" role="img" aria-label="Developer quote">
+  <title>{esc(text)} - {esc(author)}</title>
+  <style>
+    .c {{ opacity: 0; animation: f .6s ease-out forwards; }}
+    @keyframes f {{ to {{ opacity: 1; }} }}
+    @media (prefers-reduced-motion: reduce) {{
+      .c {{ animation: none; opacity: 1; }}
+    }}
+  </style>
+  <rect x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="6"
+        fill="{th['bg']}" stroke="{th['border']}"/>
+{body}
+</svg>
+"""
+
+
+def wave(width, base, amp, humps):
+    """Quadratic wave along y=base, alternating above and below."""
+    seg = width / humps
+    d = [f"M0,{base}"]
+    for i in range(humps):
+        x1 = (i + 1) * seg
+        cx = i * seg + seg / 2
+        cy = base + (amp if i % 2 == 0 else -amp)
+        d.append(f"Q{cx:.1f},{cy:.1f} {x1:.1f},{base}")
+    return " ".join(d)
+
+
+def gradient(ident, colors, reverse=False):
+    stops = colors[::-1] if reverse else colors
+    marks = "".join(
+        f'<stop offset="{i / (len(stops) - 1):.2f}" stop-color="{c}"/>'
+        for i, c in enumerate(stops)
+    )
+    return f'<linearGradient id="{ident}" x1="0" y1="0" x2="1" y2="0">{marks}</linearGradient>'
+
+
+def render_banner(name, subtitle):
+    """Header wave. Transparent outside the band, so it suits either theme."""
+    width, height, base = 1200, 240, 186
+    path = wave(width, base, 26, 4) + f" L{width},0 L0,0 Z"
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
+viewBox="0 0 {width} {height}" role="img" aria-label="{esc(name)} - {esc(subtitle)}">
+  <title>{esc(name)}</title>
+  <defs>{gradient("g", BRAND)}</defs>
+  <path d="{path}" fill="url(#g)"/>
+  <text x="{width // 2}" y="96" text-anchor="middle"
+        style="font: 700 44px {FONT}; fill: #ffffff">{esc(name)}</text>
+  <text x="{width // 2}" y="134" text-anchor="middle"
+        style="font: 400 18px {FONT}; fill: #f0eaff">{esc(subtitle)}</text>
+</svg>
+"""
+
+
+def render_footer():
+    width, height, base = 1200, 120, 46
+    path = wave(width, base, 22, 4) + f" L{width},{height} L0,{height} Z"
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
+viewBox="0 0 {width} {height}" role="img" aria-label="">
+  <defs>{gradient("g", BRAND, reverse=True)}</defs>
+  <path d="{path}" fill="url(#g)"/>
+</svg>
+"""
+
+
+def render_divider():
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="3" \
+viewBox="0 0 1200 3" role="img" aria-label="">
+  <defs>{gradient("g", BRAND)}</defs>
+  <rect width="1200" height="3" rx="1.5" fill="url(#g)"/>
+</svg>
+"""
+
+
+def projects_table(repos, login, limit=8):
+    """Markdown table of repos that actually have a deployment behind them."""
+    live = [
+        r
+        for r in repos
+        if (r.get("homepageUrl") or "").startswith("http")
+        and r["name"].lower() != login.lower()
+    ]
+    # Most-starred first, then most recently pushed.
+    live.sort(key=lambda r: (r["stargazerCount"], r["pushedAt"]), reverse=True)
+    live = live[:limit]
+
+    rows = ["| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |",
+            "| :--- | :--- | :--- | :---: |"]
+    for repo in live:
+        pretty = repo["name"].replace("-", " ").replace("_", " ").strip()
+        desc = (repo["description"] or "").strip()
+        # Keep the table one line per row however long the description is.
+        if len(desc) > 78:
+            desc = desc[:75].rstrip() + "..."
+        desc = desc.replace("|", "\\|")
+        langs = [e["node"]["name"] for e in repo["languages"]["edges"][:3]]
+        tech = " ".join(f"`{l}`" for l in langs) or "-"
+        rows.append(
+            f"| **{pretty}** | {desc} | {tech} | "
+            f"[Demo]({repo['homepageUrl']}) |"
+        )
+    return "\n".join(rows), len(live)
+
+
+def inject(readme_path, table, count):
+    """Replace the marked regions of the README in place."""
+    if not os.path.exists(readme_path):
+        print(f"note: {readme_path} not found, skipping injection")
+        return False
+
+    with open(readme_path, encoding="utf-8") as fh:
+        original = fh.read()
+
+    updated = original
+    for name, value in (("PROJECTS", table), ("PROJECTCOUNT", str(count))):
+        pattern = re.compile(
+            rf"(<!-- {name}:START -->)(.*?)(<!-- {name}:END -->)", re.S
+        )
+        if not pattern.search(updated):
+            print(f"note: no {name} markers in {readme_path}")
+            continue
+        joiner = "\n\n" if name == "PROJECTS" else ""
+        updated = pattern.sub(
+            lambda m: f"{m.group(1)}{joiner}{value}{joiner}{m.group(3)}", updated
+        )
+
+    if updated == original:
+        return False
+    with open(readme_path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(updated)
+    return True
 
 
 def main():
     login = os.environ.get("USERNAME") or sys.exit("USERNAME is not set")
     out = os.environ.get("OUT_DIR", "assets")
+    readme = os.environ.get("README_PATH", "README.md")
     os.makedirs(out, exist_ok=True)
 
     profile, totals, days = fetch(login)
     repos = profile["repositories"]["nodes"]
     stars = sum(r["stargazerCount"] for r in repos)
     total, current, longest, cur_start, cur_end = streaks(days)
+    langs = top_languages(repos)
+    name = profile["name"] or login
 
     def pretty(iso, fmt="%b %d, %Y"):
         return datetime.fromisoformat(iso).strftime(fmt) if iso else ""
@@ -411,31 +603,53 @@ def main():
     if current:
         # A live streak reads as "Jun 25 - Present"; a stale one keeps its
         # real end date rather than implying it is still running.
-        today = datetime.now(timezone.utc).date().isoformat()
-        tail = "Present" if cur_end >= today else pretty(cur_end, "%b %d")
+        today_iso = datetime.now(timezone.utc).date().isoformat()
+        tail = "Present" if cur_end >= today_iso else pretty(cur_end, "%b %d")
         last = f"{pretty(cur_start, '%b %d')} - {tail}"
     else:
         last = ""
 
-    cards = {
-        "stats.svg": render_stats(
-            profile["name"] or login,
-            stars,
-            totals,
-            profile["repositories"]["totalCount"],
-            profile["followers"]["totalCount"],
+    today = datetime.now(timezone.utc).date()
+    written = []
+
+    for suffix, th in THEMES.items():
+        cards = {
+            f"stats{suffix}.svg": render_stats(
+                th, name, stars, totals,
+                profile["repositories"]["totalCount"],
+                profile["followers"]["totalCount"],
+            ),
+            f"top-langs{suffix}.svg": render_langs(th, langs),
+            f"streak{suffix}.svg": render_streak(
+                th, total, current, longest, first, last
+            ),
+            f"activity{suffix}.svg": render_activity(th, days),
+            f"quote{suffix}.svg": render_quote(th, today),
+        }
+        for filename, svg in cards.items():
+            with open(os.path.join(out, filename), "w", encoding="utf-8",
+                      newline="\n") as fh:
+                fh.write(svg)
+            written.append(filename)
+
+    chrome = {
+        "banner.svg": render_banner(
+            name, "Software Engineer - Full-Stack Developer - AI/ML Enthusiast"
         ),
-        "top-langs.svg": render_langs(top_languages(repos)),
-        "streak.svg": render_streak(total, current, longest, first, last),
-        "activity.svg": render_activity(days),
+        "footer.svg": render_footer(),
+        "divider.svg": render_divider(),
     }
-
-    for filename, svg in cards.items():
-        path = os.path.join(out, filename)
-        with open(path, "w", encoding="utf-8") as fh:
+    for filename, svg in chrome.items():
+        with open(os.path.join(out, filename), "w", encoding="utf-8",
+                  newline="\n") as fh:
             fh.write(svg)
-        print(f"wrote {path} ({len(svg)} bytes)")
+        written.append(filename)
 
+    table, count = projects_table(repos, login)
+    changed = inject(readme, table, count)
+
+    print(f"wrote {len(written)} assets: {', '.join(sorted(written))}")
+    print(f"projects table: {count} live projects, readme changed={changed}")
     print(
         f"stars={stars} commits={totals['commits']} prs={totals['prs']} "
         f"issues={totals['issues']} streak={current} longest={longest}"
