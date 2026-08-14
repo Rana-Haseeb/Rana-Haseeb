@@ -46,7 +46,7 @@ class Haseeb:
 - 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini CSV analyzer**
 - 🧠 &nbsp;Diving deep into **Machine Learning, Deep Learning & LLMs**
 - 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js)
-- 🚀 &nbsp;**<!-- PROJECTCOUNT:START -->10<!-- PROJECTCOUNT:END --> live deployed projects** — a selection is showcased below
+- 🚀 &nbsp;**<!-- PROJECTCOUNT:START -->11<!-- PROJECTCOUNT:END --> live deployed projects** — a selection is showcased below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 
 <br clear="both"/>
@@ -144,8 +144,9 @@ class Haseeb:
 | 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Link |
 | :--- | :--- | :--- | :---: |
 | **🤖 AI CSV Analyzer** | Upload a CSV, get instant AI insights powered by Gemini | `JavaScript` `CSS` `HTML` | [Demo](https://ai-powered-csv-cleaner-summarizer.vercel.app) |
-| **🧠 Multi-Agent Research Platform** | Six AI agents research, debate, and cite every claim | `Python` | [Code](https://github.com/Rana-Haseeb/Multi-Agent-Research-Platform) |
-| **🗂️ Productivity Agent** | LangGraph agent with human approval before every write | `Python` `PLpgSQL` | [Code](https://github.com/Rana-Haseeb/productivity-agent-2026) |
+| **🧠 Multi-Agent Research Platform** | Six AI agents research, debate, and cite every claim | `Python` | [Demo](https://multi-agent-research-platform.streamlit.app) |
+| **🗂️ Productivity Agent** | LangGraph agent with human approval before every write | `Python` `PLpgSQL` | [Demo](https://appuctivity-agent-2026.streamlit.app) |
+| **🗽 NYC Congestion Audit** | PySpark and GeoPandas pipeline auditing 2025 congestion pricing | `Python` | [Demo](https://nyc-congestion-audit-gfbue5baenwayaxdcftzb6.streamlit.app) |
 | **✨ Self-Updating Portfolio** | Reads GitHub live and writes up new projects with AI | `TypeScript` `CSS` `JavaScript` | [Demo](https://portfolio-omega-ten-84.vercel.app) |
 | **📋 TaskFlow** | Real-time glassmorphic Kanban board with threaded comments | `TypeScript` `CSS` `JavaScript` | [Demo](https://ai-task-management-system-khaki.vercel.app) |
 | **💬 Plume** | Real-time 1-on-1 and group chat over Socket.io | `TypeScript` `CSS` `JavaScript` | [Demo](https://plume-realtime-messaging.vercel.app) |
