@@ -21,6 +21,7 @@ Env:
 
 import json
 import os
+import random
 import re
 import sys
 import urllib.error
@@ -507,47 +508,131 @@ def wave(width, base, amp, humps):
     return " ".join(d)
 
 
-def gradient(ident, colors, reverse=False):
-    stops = colors[::-1] if reverse else colors
-    marks = "".join(
-        f'<stop offset="{i / (len(stops) - 1):.2f}" stop-color="{c}"/>'
-        for i, c in enumerate(stops)
+def gradient(ident, colors, reverse=False, animate=True, dur=12):
+    """Brand gradient. Each stop cycles through the ramp so the fill drifts.
+
+    SMIL animation renders fine in GitHub READMEs - it is what drives the
+    snake and typing SVGs already embedded here.
+    """
+    stops = list(colors[::-1] if reverse else colors)
+    marks = []
+    for i, colour in enumerate(stops):
+        offset = i / (len(stops) - 1)
+        # Walk the ramp starting from this stop, returning to itself so the
+        # loop closes without a visible jump.
+        cycle = stops[i:] + stops[:i] + [colour]
+        anim = (
+            f'<animate attributeName="stop-color" '
+            f'values="{";".join(cycle)}" dur="{dur}s" '
+            f'repeatCount="indefinite"/>'
+            if animate
+            else ""
+        )
+        marks.append(
+            f'<stop offset="{offset:.2f}" stop-color="{colour}">{anim}</stop>'
+        )
+    return (
+        f'<linearGradient id="{ident}" x1="0" y1="0" x2="1" y2="0">'
+        f'{"".join(marks)}</linearGradient>'
     )
-    return f'<linearGradient id="{ident}" x1="0" y1="0" x2="1" y2="0">{marks}</linearGradient>'
+
+
+def drifting_wave(width, base, amp, humps, dur, fill, close_to):
+    """A wave twice as wide as the frame, sliding left forever.
+
+    The pattern repeats every 2*width/humps, so translating by exactly one
+    period loops seamlessly with no visible seam.
+    """
+    span = width * 2
+    total_humps = humps * 2
+    period = span / total_humps * 2
+    path = wave(span, base, amp, total_humps) + f" L{span},{close_to} L0,{close_to} Z"
+    return (
+        f'<g><path d="{path}" fill="{fill}"/>'
+        f'<animateTransform attributeName="transform" type="translate" '
+        f'from="0 0" to="-{period:.1f} 0" dur="{dur}s" '
+        f'repeatCount="indefinite"/></g>'
+    )
+
+
+def twinkles(width, height, count=26, seed=7):
+    """Deterministic star field, so the file does not churn between runs."""
+    rng = random.Random(seed)
+    out = []
+    for _ in range(count):
+        x = rng.uniform(20, width - 20)
+        y = rng.uniform(14, height - 30)
+        r = rng.uniform(0.9, 2.2)
+        dur = rng.uniform(1.8, 4.2)
+        begin = rng.uniform(0, 4)
+        out.append(
+            f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{r:.1f}" fill="#ffffff" '
+            f'opacity="0">'
+            f'<animate attributeName="opacity" values="0;.9;0" '
+            f'dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/>'
+            f"</circle>"
+        )
+    return "".join(out)
 
 
 def render_banner(name, subtitle):
-    """Header wave. Transparent outside the band, so it suits either theme."""
+    """Header band: drifting gradient, two sliding waves, twinkling stars.
+
+    Transparent outside the band, so one copy serves light and dark.
+    """
     width, height, base = 1200, 240, 186
-    path = wave(width, base, 26, 4) + f" L{width},0 L0,0 Z"
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
 viewBox="0 0 {width} {height}" role="img" aria-label="{esc(name)} - {esc(subtitle)}">
   <title>{esc(name)}</title>
-  <defs>{gradient("g", BRAND)}</defs>
-  <path d="{path}" fill="url(#g)"/>
+  <defs>
+    {gradient("g", BRAND, dur=14)}
+    {gradient("g2", BRAND, reverse=True, dur=19)}
+    <clipPath id="band"><rect width="{width}" height="{base + 30}"/></clipPath>
+  </defs>
+  <g clip-path="url(#band)">
+    {drifting_wave(width, base, 26, 4, 18, "url(#g)", 0)}
+    <g opacity="0.35">
+      {drifting_wave(width, base - 14, 20, 3, 27, "url(#g2)", 0)}
+    </g>
+    {twinkles(width, base)}
+  </g>
   <text x="{width // 2}" y="96" text-anchor="middle"
-        style="font: 700 44px {FONT}; fill: #ffffff">{esc(name)}</text>
+        style="font: 700 44px {FONT}; fill: #ffffff">{esc(name)}
+    <animate attributeName="opacity" values="0;1" dur="1s" fill="freeze"/>
+  </text>
   <text x="{width // 2}" y="134" text-anchor="middle"
-        style="font: 400 18px {FONT}; fill: #f0eaff">{esc(subtitle)}</text>
+        style="font: 400 18px {FONT}; fill: #f0eaff">{esc(subtitle)}
+    <animate attributeName="opacity" values="0;1" dur="1.4s" begin="0.3s"
+             fill="freeze"/>
+  </text>
 </svg>
 """
 
 
 def render_footer():
     width, height, base = 1200, 120, 46
-    path = wave(width, base, 22, 4) + f" L{width},{height} L0,{height} Z"
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
 viewBox="0 0 {width} {height}" role="img" aria-label="">
-  <defs>{gradient("g", BRAND, reverse=True)}</defs>
-  <path d="{path}" fill="url(#g)"/>
+  <defs>
+    {gradient("g", BRAND, reverse=True, dur=14)}
+    {gradient("g2", BRAND, dur=21)}
+    <clipPath id="fband"><rect y="{base - 30}" width="{width}" height="{height}"/></clipPath>
+  </defs>
+  <g clip-path="url(#fband)">
+    {drifting_wave(width, base, 22, 4, 20, "url(#g)", height)}
+    <g opacity="0.35">
+      {drifting_wave(width, base + 12, 16, 3, 29, "url(#g2)", height)}
+    </g>
+  </g>
 </svg>
 """
 
 
 def render_divider():
+    """Thin rule with a gradient that slides along it."""
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="3" \
 viewBox="0 0 1200 3" role="img" aria-label="">
-  <defs>{gradient("g", BRAND)}</defs>
+  <defs>{gradient("g", BRAND, dur=9)}</defs>
   <rect width="1200" height="3" rx="1.5" fill="url(#g)"/>
 </svg>
 """
