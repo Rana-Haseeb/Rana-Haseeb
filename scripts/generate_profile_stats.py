@@ -59,16 +59,17 @@ THEMES = {
 # Hand-picked showcase, best first. Auto-discovery ranked by recency alone,
 # which buried the strongest work, so the order is editorial.
 #
-# kind "demo" links the repo's homepage; "code" links the repo itself and is
-# used where the deployment sits behind a Streamlit login wall, so the link
-# always lands somewhere a visitor can actually use.
+# kind "demo" links the repo's homepage; "code" links the repo itself, for
+# entries with no working deployment to point at.
 FEATURED = [
     ("🤖", "AI CSV Analyzer", "AI-Powered-CSV-Cleaner-Summarizer",
      "Upload a CSV, get instant AI insights powered by Gemini", "demo"),
     ("🧠", "Multi-Agent Research Platform", "Multi-Agent-Research-Platform",
-     "Six AI agents research, debate, and cite every claim", "code"),
+     "Six AI agents research, debate, and cite every claim", "demo"),
     ("🗂️", "Productivity Agent", "productivity-agent-2026",
-     "LangGraph agent with human approval before every write", "code"),
+     "LangGraph agent with human approval before every write", "demo"),
+    ("🗽", "NYC Congestion Audit", "NYC-Congestion-Audit",
+     "PySpark and GeoPandas pipeline auditing 2025 congestion pricing", "demo"),
     ("✨", "Self-Updating Portfolio", "Portfolio",
      "Reads GitHub live and writes up new projects with AI", "demo"),
     ("📋", "TaskFlow", "Ai-Task-Management-System",
@@ -558,7 +559,7 @@ def title_case(name):
     return " ".join(w.capitalize() if w.islower() else w for w in words)
 
 
-def projects_table(repos, login, limit=10):
+def projects_table(repos, login, limit=12):
     """Markdown table of the featured projects.
 
     Uses the hand-picked FEATURED order, looking each entry up in the API
