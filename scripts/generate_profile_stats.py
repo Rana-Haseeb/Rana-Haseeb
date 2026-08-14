@@ -538,12 +538,16 @@ def projects_table(repos, login, limit=8):
     rows = ["| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |",
             "| :--- | :--- | :--- | :---: |"]
     for repo in live:
-        pretty = repo["name"].replace("-", " ").replace("_", " ").strip()
+        # Capitalise only all-lowercase words, so "plume-realtime-messaging"
+        # reads as a title while "AI-Powered-CSV" keeps its own casing.
+        words = repo["name"].replace("_", "-").split("-")
+        pretty = " ".join(w.capitalize() if w.islower() else w for w in words)
+
         desc = (repo["description"] or "").strip()
         # Keep the table one line per row however long the description is.
         if len(desc) > 78:
             desc = desc[:75].rstrip() + "..."
-        desc = desc.replace("|", "\\|")
+        desc = desc.replace("|", "\\|") or "&mdash;"
         langs = [e["node"]["name"] for e in repo["languages"]["edges"][:3]]
         tech = " ".join(f"`{l}`" for l in langs) or "-"
         rows.append(
