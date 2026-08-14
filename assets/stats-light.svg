@@ -23,7 +23,7 @@
   <rect x="0.5" y="0.5" width="449" height="214" rx="6" fill="none" stroke="url(#trail)" stroke-width="2" stroke-dasharray="159 1167" stroke-linecap="round" opacity="0.9"><animate attributeName="stroke-dashoffset" values="1326;0" dur="7s" repeatCount="indefinite"/></rect>
   <text x="25" y="35" class="t">Rana Muhammad Haseeb Khan's GitHub Stats</text>
   <g class="c" style="animation-delay:0.10s"><circle cx="30" cy="64" r="3" fill="#0e7490"/><text x="45" y="68" class="k">Total Stars Earned</text><text x="425" y="68" class="v" text-anchor="end">1</text></g>
-  <g class="c" style="animation-delay:0.18s"><circle cx="30" cy="88" r="3" fill="#0e7490"/><text x="45" y="92" class="k">Total Commits</text><text x="425" y="92" class="v" text-anchor="end">305</text></g>
+  <g class="c" style="animation-delay:0.18s"><circle cx="30" cy="88" r="3" fill="#0e7490"/><text x="45" y="92" class="k">Total Commits</text><text x="425" y="92" class="v" text-anchor="end">307</text></g>
   <g class="c" style="animation-delay:0.26s"><circle cx="30" cy="112" r="3" fill="#0e7490"/><text x="45" y="116" class="k">Total PRs</text><text x="425" y="116" class="v" text-anchor="end">23</text></g>
   <g class="c" style="animation-delay:0.34s"><circle cx="30" cy="136" r="3" fill="#0e7490"/><text x="45" y="140" class="k">Total Issues</text><text x="425" y="140" class="v" text-anchor="end">0</text></g>
   <g class="c" style="animation-delay:0.42s"><circle cx="30" cy="160" r="3" fill="#0e7490"/><text x="45" y="164" class="k">Public Repositories</text><text x="425" y="164" class="v" text-anchor="end">30</text></g>
