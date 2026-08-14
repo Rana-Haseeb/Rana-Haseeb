@@ -87,6 +87,22 @@ FEATURED = [
      "Cinema-grade movie discovery platform", "demo"),
 ]
 
+# Phrases for the locally rendered typing effect, replacing the demolab
+# service the README used to call.
+TYPING_HERO = [
+    "AI / ML Enthusiast",
+    "Building Intelligent Applications",
+    "Machine Learning & Generative AI",
+    "C++ & Data Structures Enthusiast",
+    "Full-Stack MERN Developer",
+    "Turning data into decisions",
+]
+
+TYPING_OUTRO = [
+    "Thanks for visiting!",
+    "Let's build something intelligent together!",
+]
+
 QUOTES = [
     ("Simplicity is the soul of efficiency.", "Austin Freeman"),
     ("Make it work, make it right, make it fast.", "Kent Beck"),
@@ -283,11 +299,31 @@ def esc(s):
     )
 
 
+def glow_trail(width, height, dur=7):
+    """A short bright dash that travels once around the card border."""
+    perimeter = 2 * ((width - 1) + (height - 1))
+    lit = max(90, perimeter * 0.12)
+    return (
+        f'<rect x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="6" '
+        f'fill="none" stroke="url(#trail)" stroke-width="2" '
+        f'stroke-dasharray="{lit:.0f} {perimeter - lit:.0f}" '
+        f'stroke-linecap="round" opacity="0.9">'
+        f'<animate attributeName="stroke-dashoffset" values="{perimeter:.0f};0" '
+        f'dur="{dur}s" repeatCount="indefinite"/></rect>'
+    )
+
+
 def frame(th, width, height, title, body):
-    """Shared card chrome: rounded panel, border, title, fade-in."""
+    """Shared card chrome: rounded panel, border, travelling glow, title."""
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" \
 viewBox="0 0 {width} {height}" role="img" aria-label="{esc(title)}">
   <title>{esc(title)}</title>
+  <defs>
+    <linearGradient id="trail" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="{th['title']}"/>
+      <stop offset="1" stop-color="{th['accent']}"/>
+    </linearGradient>
+  </defs>
   <style>
     .t {{ font: 600 16px {FONT}; fill: {th['title']}; }}
     .k {{ font: 400 13px {FONT}; fill: {th['text']}; }}
@@ -302,6 +338,7 @@ viewBox="0 0 {width} {height}" role="img" aria-label="{esc(title)}">
   </style>
   <rect x="0.5" y="0.5" width="{width - 1}" height="{height - 1}" rx="6"
         fill="{th['bg']}" stroke="{th['border']}"/>
+  {glow_trail(width, height)}
   <text x="25" y="35" class="t">{esc(title)}</text>
 {body}
 </svg>
@@ -555,6 +592,29 @@ def drifting_wave(width, base, amp, humps, dur, fill, close_to):
     )
 
 
+def particles(width, base, count=16, seed=11):
+    """Motes drifting up through the band, fading as they rise."""
+    rng = random.Random(seed)
+    out = []
+    for _ in range(count):
+        x = rng.uniform(30, width - 30)
+        r = rng.uniform(1.2, 3.0)
+        rise = rng.uniform(70, 150)
+        dur = rng.uniform(7, 14)
+        begin = rng.uniform(0, 10)
+        out.append(
+            f'<circle cx="{x:.0f}" cy="{base - 6:.0f}" r="{r:.1f}" '
+            f'fill="#ffffff" opacity="0">'
+            f'<animateTransform attributeName="transform" type="translate" '
+            f'values="0 0;0 -{rise:.0f}" dur="{dur:.1f}s" begin="{begin:.1f}s" '
+            f'repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="0;.55;0" '
+            f'dur="{dur:.1f}s" begin="{begin:.1f}s" repeatCount="indefinite"/>'
+            f"</circle>"
+        )
+    return "".join(out)
+
+
 def twinkles(width, height, count=26, seed=7):
     """Deterministic star field, so the file does not churn between runs."""
     rng = random.Random(seed)
@@ -588,6 +648,15 @@ viewBox="0 0 {width} {height}" role="img" aria-label="{esc(name)} - {esc(subtitl
     {gradient("g", BRAND, dur=14)}
     {gradient("g2", BRAND, reverse=True, dur=19)}
     <clipPath id="band"><rect width="{width}" height="{base + 30}"/></clipPath>
+    <linearGradient id="shine" gradientUnits="userSpaceOnUse"
+                    x1="-320" y1="0" x2="0" y2="0">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.72"/>
+      <stop offset="0.5" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.72"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+                        values="0 0;{width + 340} 0" dur="5s"
+                        repeatCount="indefinite"/>
+    </linearGradient>
   </defs>
   <g clip-path="url(#band)">
     {drifting_wave(width, base, 26, 4, 18, "url(#g)", 0)}
@@ -595,9 +664,10 @@ viewBox="0 0 {width} {height}" role="img" aria-label="{esc(name)} - {esc(subtitl
       {drifting_wave(width, base - 14, 20, 3, 27, "url(#g2)", 0)}
     </g>
     {twinkles(width, base)}
+    {particles(width, base)}
   </g>
   <text x="{width // 2}" y="96" text-anchor="middle"
-        style="font: 700 44px {FONT}; fill: #ffffff">{esc(name)}
+        style="font: 700 44px {FONT}" fill="url(#shine)">{esc(name)}
     <animate attributeName="opacity" values="0;1" dur="1s" fill="freeze"/>
   </text>
   <text x="{width // 2}" y="134" text-anchor="middle"
@@ -642,6 +712,106 @@ def title_case(name):
     """Capitalise all-lowercase words only, so acronym casing survives."""
     words = name.replace("_", "-").split("-")
     return " ".join(w.capitalize() if w.islower() else w for w in words)
+
+
+MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,DejaVu Sans Mono,monospace"
+
+
+def keyframes(points):
+    """Build (values, keyTimes) for SMIL from (time_fraction, value) pairs.
+
+    Collapses duplicate times and pins the series to 0 and 1, which SMIL
+    requires and which the first and last phrase would otherwise violate.
+    """
+    out = []
+    for t, v in points:
+        t = min(max(t, 0.0), 1.0)
+        if out and abs(out[-1][0] - t) < 1e-6:
+            out[-1] = (t, v)
+        else:
+            out.append((t, v))
+    if out[0][0] > 0:
+        out.insert(0, (0.0, out[0][1]))
+    if out[-1][0] < 1:
+        out.append((1.0, out[-1][1]))
+    return (
+        ";".join(str(v) for _, v in out),
+        ";".join(f"{t:.4f}" for t, _ in out),
+    )
+
+
+def text_width(s, size):
+    """Monospace advance. Non-ASCII (emoji) take roughly two cells."""
+    cells = sum(2 if ord(c) > 0x2000 else 1 for c in s)
+    return cells * size * 0.6
+
+
+def render_typing(th, phrases, size=26, width=760, slot=3.6, colour=None):
+    """Typing effect with a tracking cursor, replacing the demolab service.
+
+    Each phrase types out, holds, then backspaces, so the clip returns to
+    zero before the next one starts and no frame shows a half-erased line.
+    """
+    colour = colour or th["title"]
+    height = int(size * 2.2)
+    cy = height * 0.68
+    cycle = slot * len(phrases)
+    bar_h = size * 1.15
+    bar_y = cy - size * 0.92
+
+    defs, body = [], []
+    for i, phrase in enumerate(phrases):
+        w = text_width(phrase, size)
+        x0 = (width - w) / 2
+        t0 = i * slot / cycle
+        t_type = (i * slot + slot * 0.45) / cycle
+        t_hold = (i * slot + slot * 0.80) / cycle
+        t_end = (i + 1) * slot / cycle
+
+        wid_v, wid_t = keyframes(
+            [(0, 0), (t0, 0), (t_type, round(w, 1)), (t_hold, round(w, 1)),
+             (t_end, 0)]
+        )
+        cur_v, cur_t = keyframes(
+            [(0, round(x0, 1)), (t0, round(x0, 1)),
+             (t_type, round(x0 + w, 1)), (t_hold, round(x0 + w, 1)),
+             (t_end, round(x0, 1))]
+        )
+        vis_v, vis_t = keyframes([(0, 0), (t0, 1), (t_end, 0)])
+
+        defs.append(
+            f'<clipPath id="tc{i}"><rect x="{x0:.1f}" y="0" '
+            f'height="{height}" width="0">'
+            f'<animate attributeName="width" values="{wid_v}" '
+            f'keyTimes="{wid_t}" dur="{cycle:.1f}s" '
+            f'repeatCount="indefinite"/></rect></clipPath>'
+        )
+        body.append(
+            f'  <g clip-path="url(#tc{i})">'
+            f'<text x="{x0:.1f}" y="{cy:.1f}" '
+            f'style="font: 700 {size}px {MONO}; fill: {colour}">'
+            f"{esc(phrase)}</text></g>\n"
+            f'  <g opacity="0"><animate attributeName="opacity" '
+            f'values="{vis_v}" keyTimes="{vis_t}" calcMode="discrete" '
+            f'dur="{cycle:.1f}s" repeatCount="indefinite"/>'
+            f'<rect y="{bar_y:.1f}" width="2.5" height="{bar_h:.1f}" '
+            f'rx="1" fill="{th["accent"]}" x="{x0:.1f}">'
+            f'<animate attributeName="x" values="{cur_v}" keyTimes="{cur_t}" '
+            f'dur="{cycle:.1f}s" repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="1;1;0;0" '
+            f'keyTimes="0;0.49;0.5;1" calcMode="discrete" dur="1.1s" '
+            f'repeatCount="indefinite"/></rect></g>'
+        )
+
+    label = " / ".join(phrases)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" \
+height="{height}" viewBox="0 0 {width} {height}" role="img" \
+aria-label="{esc(label)}">
+  <title>{esc(label)}</title>
+  <defs>{"".join(defs)}</defs>
+{chr(10).join(body)}
+</svg>
+"""
 
 
 def projects_table(repos, login, limit=12):
@@ -772,6 +942,11 @@ def main():
             ),
             f"activity{suffix}.svg": render_activity(th, days),
             f"quote{suffix}.svg": render_quote(th, today),
+            f"typing{suffix}.svg": render_typing(th, TYPING_HERO),
+            f"typing-outro{suffix}.svg": render_typing(
+                th, TYPING_OUTRO, size=18, width=620, slot=4.0,
+                colour=th["accent"],
+            ),
         }
         for filename, svg in cards.items():
             with open(os.path.join(out, filename), "w", encoding="utf-8",

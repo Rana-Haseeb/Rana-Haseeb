@@ -6,7 +6,10 @@
 <!-- ===================== TYPING ===================== -->
 <div align="center">
   <a href="https://github.com/Rana-Haseeb">
-    <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=26&pause=1000&color=A55EEA&center=true&vCenter=true&width=680&height=50&lines=AI+%2F+ML+Enthusiast+%F0%9F%A4%96;Building+Intelligent+Applications;Machine+Learning+%26+Generative+AI;C%2B%2B+%26+Data+Structures+Enthusiast;Full-Stack+MERN+Developer;Turning+data+into+decisions+%F0%9F%9A%80" alt="Typing SVG" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/typing.svg" />
+      <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/typing-light.svg" alt="Rotating headline: AI/ML enthusiast, full-stack MERN developer" />
+    </picture>
   </a>
 </div>
 
@@ -189,7 +192,10 @@ class Haseeb:
 <br/>
 
 <div align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Plus+Jakarta+Sans&weight=600&size=18&pause=1000&color=22D3EE&center=true&vCenter=true&width=520&lines=Thanks+for+visiting!+%E2%AD%90;Let's+build+something+intelligent+together!" alt="outro" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/typing-outro.svg" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/typing-outro-light.svg" alt="Thanks for visiting" />
+  </picture>
 </div>
 
 <!-- ===================== COPYRIGHT ===================== -->
