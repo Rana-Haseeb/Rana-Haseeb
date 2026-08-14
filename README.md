@@ -16,12 +16,12 @@
 <!-- ===================== BADGES ===================== -->
 <div align="center">
   <img src="https://komarev.com/ghpvc/?username=Rana-Haseeb&label=Profile%20Views&color=a55eea&style=for-the-badge" alt="views" />
-  <img src="https://img.shields.io/github/followers/Rana-Haseeb?label=Followers&style=for-the-badge&color=6c5ce7&logo=github" alt="followers" />
+  <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-followers.svg" alt="GitHub followers" />
   <a href="https://www.linkedin.com/in/rana-muhammad-haseeb-khan-039098298">
-    <img src="https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-linkedin.svg" alt="LinkedIn" />
   </a>
   <a href="mailto:ranahaseeb92029@gmail.com">
-    <img src="https://img.shields.io/badge/Email-Say%20Hi-22d3ee?style=for-the-badge&logo=gmail&logoColor=white" alt="email" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-email.svg" alt="Email" />
   </a>
 </div>
 
@@ -63,25 +63,25 @@ class Haseeb:
 
 **🤖 AI / ML & Data Science**
 <br/>
-<img src="https://skillicons.dev/icons?i=python,tensorflow,pytorch,sklearn,opencv&theme=dark" alt="ai-ml" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/icons-ai.svg" alt="Python, TensorFlow, PyTorch, scikit-learn, OpenCV" />
 <br/>
-<img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" />
-<img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" />
-<img src="https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white" />
-<img src="https://img.shields.io/badge/Google_Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" />
-<img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-pandas.svg" alt="Pandas" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-numpy.svg" alt="NumPy" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-jupyter.svg" alt="Jupyter" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-gemini.svg" alt="Google Gemini" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-openai.svg" alt="OpenAI" />
 
 **💻 Languages**
 <br/>
-<img src="https://skillicons.dev/icons?i=cpp,python,js,ts,html,css&theme=dark" alt="languages" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/icons-lang.svg" alt="C++, Python, JavaScript, TypeScript, HTML, CSS" />
 
 **⚙️ Frameworks & Libraries**
 <br/>
-<img src="https://skillicons.dev/icons?i=react,nextjs,nodejs,express,tailwind,vite&theme=dark" alt="frameworks" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/icons-frameworks.svg" alt="React, Next.js, Node.js, Express, Tailwind, Vite" />
 
 **🗄️ Databases & Tools**
 <br/>
-<img src="https://skillicons.dev/icons?i=mongodb,mysql,git,github,vscode,postman&theme=dark" alt="tools" />
+<img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/icons-tools.svg" alt="MongoDB, MySQL, Git, GitHub, VS Code, Postman" />
 
 </div>
 
@@ -179,13 +179,13 @@ class Haseeb:
 
 <div align="center">
   <a href="https://www.linkedin.com/in/rana-muhammad-haseeb-khan-039098298">
-    <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="linkedin" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-linkedin-solo.svg" alt="LinkedIn" />
   </a>
   <a href="mailto:ranahaseeb92029@gmail.com">
-    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="gmail" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-gmail.svg" alt="Gmail" />
   </a>
   <a href="https://github.com/Rana-Haseeb">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="github" />
+    <img src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/badge-github.svg" alt="GitHub" />
   </a>
 </div>
 

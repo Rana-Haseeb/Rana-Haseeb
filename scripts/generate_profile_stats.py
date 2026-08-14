@@ -716,6 +716,122 @@ def title_case(name):
 
 MONO = "ui-monospace,SFMono-Regular,Menlo,Consolas,DejaVu Sans Mono,monospace"
 
+TILE_BG = "#1a1b27"
+
+
+def readable(hex_colour, floor=0.28):
+    """Lift near-black brand colours so they show on the dark tile.
+
+    Next.js, Express, GitHub, pandas and NumPy all ship almost-black marks,
+    which would be invisible against the tile.
+    """
+    r, g, b = (int(hex_colour[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    if (0.2126 * r + 0.7152 * g + 0.0722 * b) < floor:
+        return "#ffffff"
+    return f"#{hex_colour}"
+
+
+def glyph(key, x, y, size):
+    """One brand mark, scaled from its native 24x24 box."""
+    from brand_icons import ICONS, LETTERS
+
+    if key in ICONS:
+        _, hexv, path = ICONS[key]
+        scale = size / 24
+        return (
+            f'<g transform="translate({x:.1f},{y:.1f}) scale({scale:.4f})">'
+            f'<path d="{path}" fill="{readable(hexv)}"/></g>'
+        )
+
+    _, hexv, initials = LETTERS[key]
+    return (
+        f'<text x="{x + size / 2:.1f}" y="{y + size * 0.78:.1f}" '
+        f'text-anchor="middle" style="font: 700 {size * 0.62:.0f}px {FONT}" '
+        f'fill="{readable(hexv)}">{esc(initials)}</text>'
+    )
+
+
+def render_icon_row(keys, tile=50, gap=9, icon=26):
+    """Row of brand tiles, each bobbing on its own stagger."""
+    width = len(keys) * tile + (len(keys) - 1) * gap
+    height = tile + 12
+    cells = []
+    for i, key in enumerate(keys):
+        x = i * (tile + gap)
+        pad = (tile - icon) / 2
+        cells.append(
+            f'  <g transform="translate({x},6)">'
+            f'<animateTransform attributeName="transform" type="translate" '
+            f'values="0 0;0 -4;0 0" dur="3.2s" begin="{i * 0.18:.2f}s" '
+            f'repeatCount="indefinite" additive="sum"/>'
+            f'<rect width="{tile}" height="{tile}" rx="11" fill="{TILE_BG}"/>'
+            f"{glyph(key, pad, pad, icon)}</g>"
+        )
+    label = ", ".join(keys)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width}" \
+height="{height}" viewBox="0 0 {width} {height}" role="img" \
+aria-label="{esc(label)}">
+  <title>{esc(label)}</title>
+{chr(10).join(cells)}
+</svg>
+"""
+
+
+def render_badge(message, colour, icon=None, label=None, height=28):
+    """Pill badge in the flat for-the-badge style.
+
+    Text is uppercase bold, sized from a per-character estimate; the padding
+    absorbs the small error so nothing clips.
+    """
+    per, pad, gap = 8.4, 15, 8
+    icon_w = 15 if icon else 0
+
+    msg = message.upper()
+    msg_w = len(msg) * per + pad * 2
+    parts, width = [], 0
+
+    if label:
+        lab = label.upper()
+        lab_w = len(lab) * per + pad * 2 + (icon_w + gap if icon else 0)
+        parts.append(f'<rect width="{lab_w:.0f}" height="{height}" fill="#3a3f4b"/>')
+        if icon:
+            parts.append(glyph(icon, pad, (height - icon_w) / 2, icon_w))
+        parts.append(
+            f'<text x="{pad + (icon_w + gap if icon else 0):.0f}" '
+            f'y="{height * 0.66:.0f}" style="font: 700 11px {FONT}; '
+            f'letter-spacing: 1.1px" fill="#ffffff">{esc(lab)}</text>'
+        )
+        parts.append(
+            f'<rect x="{lab_w:.0f}" width="{msg_w:.0f}" height="{height}" '
+            f'fill="#{colour}"/>'
+        )
+        parts.append(
+            f'<text x="{lab_w + msg_w / 2:.0f}" y="{height * 0.66:.0f}" '
+            f'text-anchor="middle" style="font: 700 11px {FONT}; '
+            f'letter-spacing: 1.1px" fill="#ffffff">{esc(msg)}</text>'
+        )
+        width = lab_w + msg_w
+    else:
+        width = msg_w + (icon_w + gap if icon else 0)
+        parts.append(f'<rect width="{width:.0f}" height="{height}" fill="#{colour}"/>')
+        if icon:
+            parts.append(glyph(icon, pad, (height - icon_w) / 2, icon_w))
+        parts.append(
+            f'<text x="{pad + (icon_w + gap if icon else 0):.0f}" '
+            f'y="{height * 0.66:.0f}" style="font: 700 11px {FONT}; '
+            f'letter-spacing: 1.1px" fill="#ffffff">{esc(msg)}</text>'
+        )
+
+    body = "".join(parts)
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{width:.0f}" \
+height="{height}" viewBox="0 0 {width:.0f} {height}" role="img" \
+aria-label="{esc((label + ' ' if label else '') + message)}">
+  <title>{esc((label + ' ' if label else '') + message)}</title>
+  <clipPath id="r"><rect width="{width:.0f}" height="{height}" rx="4"/></clipPath>
+  <g clip-path="url(#r)">{body}</g>
+</svg>
+"""
+
 
 def keyframes(points):
     """Build (values, keyTimes) for SMIL from (time_fraction, value) pairs.
@@ -954,12 +1070,40 @@ def main():
                 fh.write(svg)
             written.append(filename)
 
+    followers = profile["followers"]["totalCount"]
     chrome = {
         "banner.svg": render_banner(
             name, "Software Engineer - Full-Stack Developer - AI/ML Enthusiast"
         ),
         "footer.svg": render_footer(),
         "divider.svg": render_divider(),
+        # Tiles and pills carry their own colour, so one copy serves both
+        # themes and there is no -light variant to keep in step.
+        "icons-ai.svg": render_icon_row(
+            ["python", "tensorflow", "pytorch", "sklearn", "opencv"]
+        ),
+        "icons-lang.svg": render_icon_row(
+            ["cpp", "python", "js", "ts", "html", "css"]
+        ),
+        "icons-frameworks.svg": render_icon_row(
+            ["react", "nextjs", "nodejs", "express", "tailwind", "vite"]
+        ),
+        "icons-tools.svg": render_icon_row(
+            ["mongodb", "mysql", "git", "github", "vscode", "postman"]
+        ),
+        "badge-followers.svg": render_badge(
+            str(followers), "6c5ce7", "github", "Followers"
+        ),
+        "badge-linkedin.svg": render_badge("Connect", "0A66C2", "linkedin", "LinkedIn"),
+        "badge-email.svg": render_badge("Say Hi", "0e7490", "gmail", "Email"),
+        "badge-pandas.svg": render_badge("Pandas", "150458", "pandas"),
+        "badge-numpy.svg": render_badge("NumPy", "013243", "numpy"),
+        "badge-jupyter.svg": render_badge("Jupyter", "F37626", "jupyter"),
+        "badge-gemini.svg": render_badge("Google Gemini", "8E75B2", "gemini"),
+        "badge-openai.svg": render_badge("OpenAI", "412991", "openai"),
+        "badge-linkedin-solo.svg": render_badge("LinkedIn", "0A66C2", "linkedin"),
+        "badge-gmail.svg": render_badge("Gmail", "EA4335", "gmail"),
+        "badge-github.svg": render_badge("GitHub", "181717", "github"),
     }
     for filename, svg in chrome.items():
         with open(os.path.join(out, filename), "w", encoding="utf-8",
