@@ -56,6 +56,35 @@ THEMES = {
     },
 }
 
+# Hand-picked showcase, best first. Auto-discovery ranked by recency alone,
+# which buried the strongest work, so the order is editorial.
+#
+# kind "demo" links the repo's homepage; "code" links the repo itself and is
+# used where the deployment sits behind a Streamlit login wall, so the link
+# always lands somewhere a visitor can actually use.
+FEATURED = [
+    ("🤖", "AI CSV Analyzer", "AI-Powered-CSV-Cleaner-Summarizer",
+     "Upload a CSV, get instant AI insights powered by Gemini", "demo"),
+    ("🧠", "Multi-Agent Research Platform", "Multi-Agent-Research-Platform",
+     "Six AI agents research, debate, and cite every claim", "code"),
+    ("🗂️", "Productivity Agent", "productivity-agent-2026",
+     "LangGraph agent with human approval before every write", "code"),
+    ("✨", "Self-Updating Portfolio", "Portfolio",
+     "Reads GitHub live and writes up new projects with AI", "demo"),
+    ("📋", "TaskFlow", "Ai-Task-Management-System",
+     "Real-time glassmorphic Kanban board with threaded comments", "demo"),
+    ("💬", "Plume", "plume-realtime-messaging",
+     "Real-time 1-on-1 and group chat over Socket.io", "demo"),
+    ("🛒", "Next.js Commerce", "nextjs-ecommerce-platform",
+     "Full-stack store with Auth.js credentials and a local cart", "demo"),
+    ("⚡", "Zap", "link-shortener",
+     "Tiny links with AI summary, safety check and QR code", "demo"),
+    ("💎", "Finovo", "expense-tracker-mern",
+     "Premium expense tracker with live balance and analytics", "demo"),
+    ("🎬", "CineSearch", "cine-vault",
+     "Cinema-grade movie discovery platform", "demo"),
+]
+
 QUOTES = [
     ("Simplicity is the soul of efficiency.", "Austin Freeman"),
     ("Make it work, make it right, make it fast.", "Kent Beck"),
@@ -523,38 +552,66 @@ viewBox="0 0 1200 3" role="img" aria-label="">
 """
 
 
-def projects_table(repos, login, limit=8):
-    """Markdown table of repos that actually have a deployment behind them."""
-    live = [
-        r
-        for r in repos
-        if (r.get("homepageUrl") or "").startswith("http")
-        and r["name"].lower() != login.lower()
-    ]
-    # Most-starred first, then most recently pushed.
-    live.sort(key=lambda r: (r["stargazerCount"], r["pushedAt"]), reverse=True)
-    live = live[:limit]
+def title_case(name):
+    """Capitalise all-lowercase words only, so acronym casing survives."""
+    words = name.replace("_", "-").split("-")
+    return " ".join(w.capitalize() if w.islower() else w for w in words)
 
-    rows = ["| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |",
+
+def projects_table(repos, login, limit=10):
+    """Markdown table of the featured projects.
+
+    Uses the hand-picked FEATURED order, looking each entry up in the API
+    data for its tech stack. Entries whose repo no longer exists are skipped
+    rather than emitting a dead row. If none resolve at all, it falls back to
+    auto-discovery so the table degrades instead of vanishing.
+    """
+    by_name = {r["name"].lower(): r for r in repos}
+    picked = []
+
+    for emoji, label, repo_name, blurb, kind in FEATURED:
+        repo = by_name.get(repo_name.lower())
+        if repo is None:
+            print(f"note: featured repo {repo_name} not found, skipping")
+            continue
+        target = (
+            repo.get("homepageUrl")
+            if kind == "demo"
+            else f"https://github.com/{login}/{repo['name']}"
+        )
+        if not (target or "").startswith("http"):
+            print(f"note: featured repo {repo_name} has no usable link")
+            continue
+        picked.append((emoji, label, repo, blurb, kind, target))
+
+    if not picked:
+        auto = [
+            r for r in repos
+            if (r.get("homepageUrl") or "").startswith("http")
+            and r["name"].lower() != login.lower()
+        ]
+        auto.sort(key=lambda r: (r["stargazerCount"], r["pushedAt"]), reverse=True)
+        picked = [
+            ("🚀", title_case(r["name"]), r, (r["description"] or "").strip(),
+             "demo", r["homepageUrl"])
+            for r in auto[:limit]
+        ]
+
+    rows = ["| 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Link |",
             "| :--- | :--- | :--- | :---: |"]
-    for repo in live:
-        # Capitalise only all-lowercase words, so "plume-realtime-messaging"
-        # reads as a title while "AI-Powered-CSV" keeps its own casing.
-        words = repo["name"].replace("_", "-").split("-")
-        pretty = " ".join(w.capitalize() if w.islower() else w for w in words)
-
-        desc = (repo["description"] or "").strip()
+    for emoji, label, repo, blurb, kind, target in picked[:limit]:
+        desc = (blurb or repo.get("description") or "").strip()
         # Keep the table one line per row however long the description is.
         if len(desc) > 78:
             desc = desc[:75].rstrip() + "..."
         desc = desc.replace("|", "\\|") or "&mdash;"
         langs = [e["node"]["name"] for e in repo["languages"]["edges"][:3]]
         tech = " ".join(f"`{l}`" for l in langs) or "-"
+        text = "Demo" if kind == "demo" else "Code"
         rows.append(
-            f"| **{pretty}** | {desc} | {tech} | "
-            f"[Demo]({repo['homepageUrl']}) |"
+            f"| **{emoji} {label}** | {desc} | {tech} | [{text}]({target}) |"
         )
-    return "\n".join(rows), len(live)
+    return "\n".join(rows), len(picked[:limit])
 
 
 def inject(readme_path, table, count):
