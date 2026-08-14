@@ -116,7 +116,7 @@ class Haseeb:
 ## 📈 Contribution Graph
 
 <div align="center">
-  <img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Rana-Haseeb&bg_color=0d1117&color=a55eea&line=22d3ee&point=ffffff&area=true&hide_border=true" alt="activity graph" />
+  <img width="100%" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/activity.svg" alt="Daily contributions over the last 31 days" />
 </div>
 
 <!-- pac-man divider (spot 2) -->

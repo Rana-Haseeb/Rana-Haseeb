@@ -327,6 +327,72 @@ def render_streak(total, current, longest, first_day, last_day):
     return frame(450, 215, "Contribution Streak", "\n".join(body))
 
 
+def render_activity(days, window=31):
+    """Area chart of daily contributions across the trailing window."""
+    today = datetime.now(timezone.utc).date()
+    series = [
+        (today - timedelta(days=i), days.get((today - timedelta(days=i)).isoformat(), 0))
+        for i in range(window - 1, -1, -1)
+    ]
+
+    width, height = 880, 260
+    left, right, top_pad, bottom = 52, 26, 62, 46
+    plot_w = width - left - right
+    plot_h = height - top_pad - bottom
+    peak = max(count for _, count in series) or 1
+
+    def px(i):
+        return left + plot_w * i / (len(series) - 1)
+
+    def py(count):
+        return top_pad + plot_h * (1 - count / peak)
+
+    grid = []
+    for frac in (0, 0.5, 1):
+        gy = top_pad + plot_h * (1 - frac)
+        grid.append(
+            f'  <line x1="{left}" y1="{gy:.1f}" x2="{width - right}" y2="{gy:.1f}" '
+            f'stroke="{BORDER}"/>'
+            f'<text x="{left - 10}" y="{gy + 4:.1f}" class="s" text-anchor="end">'
+            f"{round(peak * frac)}</text>"
+        )
+
+    points = " ".join(f"{px(i):.1f},{py(c):.1f}" for i, (_, c) in enumerate(series))
+    area = (
+        f"{left},{top_pad + plot_h} {points} "
+        f"{width - right},{top_pad + plot_h}"
+    )
+
+    dots = [
+        f'<circle cx="{px(i):.1f}" cy="{py(c):.1f}" r="2.5" fill="#ffffff"/>'
+        for i, (_, c) in enumerate(series)
+    ]
+
+    # Label roughly six dates so the axis stays readable at any window size.
+    every = max(1, len(series) // 6)
+    labels = [
+        f'  <text x="{px(i):.1f}" y="{height - 18}" class="s" text-anchor="middle">'
+        f'{date.strftime("%b %d")}</text>'
+        for i, (date, _) in enumerate(series)
+        if i % every == 0
+    ]
+
+    body = "\n".join(
+        grid
+        + [
+            f'  <g class="c" style="animation-delay:.1s">'
+            f'<polygon points="{area}" fill="{TITLE}" fill-opacity="0.18"/>'
+            f'<polyline points="{points}" fill="none" stroke="{ACCENT}" '
+            f'stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'
+            f'{"".join(dots)}</g>'
+        ]
+        + labels
+    )
+    total = sum(count for _, count in series)
+    title = f"Contribution Graph - last {window} days ({total} contributions)"
+    return frame(width, height, title, body)
+
+
 def main():
     login = os.environ.get("USERNAME") or sys.exit("USERNAME is not set")
     out = os.environ.get("OUT_DIR", "assets")
@@ -361,6 +427,7 @@ def main():
         ),
         "top-langs.svg": render_langs(top_languages(repos)),
         "streak.svg": render_streak(total, current, longest, first, last),
+        "activity.svg": render_activity(days),
     }
 
     for filename, svg in cards.items():
