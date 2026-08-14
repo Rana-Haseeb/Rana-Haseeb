@@ -8,31 +8,55 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: 3d-contrib
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
       - name: Generate 3D contribution calendar
-        uses: yoshi389111/github-profile-3d-contrib@0.7.1
+        uses: yoshi389111/github-profile-3d-contrib@fd54cf20784ed9a86dc7be48bb5eb1f74e92b4f8 # 0.7.1
         env:
           USERNAME: ${{ github.repository_owner }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create dark-themed skyline
         run: |
+          set -euo pipefail
+          src=profile-3d-contrib/profile-gitblock.svg
+          dst=profile-3d-contrib/profile-gitblock-dark.svg
+
+          test -s "$src" || {
+            echo "::error::upstream action did not produce $src"
+            exit 1
+          }
+
           sed -e 's/#ffffff/#0d1117/g' \
               -e 's/#f8f8f8/#161b22/g' \
               -e 's/#aaaaaa/#21262d/g' \
               -e 's/#00000f/#e6edf3/g' \
-              profile-3d-contrib/profile-gitblock.svg > profile-3d-contrib/profile-gitblock-dark.svg
+              "$src" > "$dst"
 
+          # The recolour is a blind string replace. If the upstream palette
+          # ever changes, this would silently publish an unstyled skyline,
+          # so fail loudly instead.
+          if cmp -s "$src" "$dst"; then
+            echo "::error::dark recolour matched nothing - upstream palette changed"
+            exit 1
+          fi
+
+      # Only the dark variant is embedded in the README. The action generates
+      # ten more SVGs each run; committing them all churned ~2.4 MB into
+      # history daily, so the pattern is scoped to the one file in use.
       - name: Commit & push
-        uses: stefanzweifel/git-auto-commit-action@v5
+        uses: stefanzweifel/git-auto-commit-action@b863ae1933cb653a53c021fe36dbb774e1fb9403 # v5
         with:
           commit_message: "chore: update 3d contribution skyline"
-          file_pattern: "profile-3d-contrib/*.svg"
+          file_pattern: "profile-3d-contrib/profile-gitblock-dark.svg"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"

@@ -46,7 +46,7 @@ class Haseeb:
 - 🤖 &nbsp;Building **AI-powered apps** — like my **Gemini CSV analyzer**
 - 🧠 &nbsp;Diving deep into **Machine Learning, Deep Learning & LLMs**
 - 💻 &nbsp;Shipping **production-style full-stack apps** (MERN, Next.js)
-- 🚀 &nbsp;**9+ live deployed projects** — explore the showcase below
+- 🚀 &nbsp;**9+ live deployed projects** — a selection is showcased below
 - 📫 &nbsp;Reach me at **ranahaseeb92029@gmail.com**
 
 <br clear="both"/>
@@ -87,13 +87,15 @@ class Haseeb:
 <!-- ===================== STATS ===================== -->
 ## 📊 GitHub Analytics
 
+<!-- Cards are generated daily by .github/workflows/profile-stats.yml and served
+     from this repo, so they do not break when a third-party card service does. -->
 <div align="center">
-  <img height="170" src="https://github-readme-stats.vercel.app/api?username=Rana-Haseeb&show_icons=true&count_private=true&hide_border=true&title_color=a55eea&icon_color=22d3ee&text_color=c9d1d9&bg_color=0d1117" alt="stats" />
-  <img height="170" src="https://github-readme-streak-stats.herokuapp.com/?user=Rana-Haseeb&hide_border=true&background=0d1117&stroke=a55eea&ring=a55eea&fire=22d3ee&currStreakLabel=a55eea&sideLabels=c9d1d9&dates=8b949e&currStreakNum=ffffff&sideNums=ffffff" alt="streak" />
+  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/stats.svg" alt="GitHub stats" />
+  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/streak.svg" alt="Contribution streak" />
 </div>
 
 <div align="center">
-  <img height="180" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Rana-Haseeb&layout=compact&hide_border=true&langs_count=8&title_color=a55eea&text_color=c9d1d9&bg_color=0d1117" alt="top langs" />
+  <img height="200" src="https://raw.githubusercontent.com/Rana-Haseeb/Rana-Haseeb/main/assets/top-langs.svg" alt="Most used languages" />
 </div>
 
 <!-- ===================== 3D SKYLINE ===================== -->

@@ -1,0 +1,10 @@
+# This repo is edited from Windows but its workflows run bash on Linux.
+# A stray CR would break the `run:` blocks, so keep these LF in the repo.
+* text=auto eol=lf
+*.yml text eol=lf
+*.py  text eol=lf
+*.svg text eol=lf
+
+# Generated cards: keep them out of diffs and language stats.
+assets/*.svg              linguist-generated=true
+profile-3d-contrib/*.svg  linguist-generated=true

@@ -1,33 +1,35 @@
 name: Generate Snake Animation
 
+# No push trigger: the contribution graph only changes once a day, so
+# regenerating on every README edit was wasted work.
 on:
   schedule:
     - cron: "0 */12 * * *"
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write
+
+concurrency:
+  group: snake
+  cancel-in-progress: true
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Generate snake SVGs
-        uses: Platane/snk@v3
-        id: snake-gif
+      # Only the dark variant is embedded in the README; the light and
+      # purple builds were generated and published unused.
+      - name: Generate snake SVG
+        uses: Platane/snk@d8f6715049803e982ee5ff501b6b9b7d5deeb09b # v3
+        id: snake
         with:
           github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-snake.svg
-            dist/github-snake-dark.svg?palette=github-dark
-            dist/github-snake-purple.svg?color_snake=a55eea&color_dots=161b22,6c5ce7,a55eea,22d3ee,ffffff
+          outputs: dist/github-snake-dark.svg?palette=github-dark
 
       - name: Push to output branch
-        uses: crazy-max/ghaction-github-pages@v4
+        uses: crazy-max/ghaction-github-pages@df5cc2bfa78282ded844b354faee141f06b41865 # v4
         with:
           target_branch: output
           build_dir: dist
