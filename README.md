@@ -143,14 +143,14 @@ class Haseeb:
 
 | 🚀 Project | 💡 Description | 🧰 Tech | 🔗 Live |
 | :--- | :--- | :--- | :---: |
-| **productivity agent 2026** | LangGraph AI agent for task & note management, with human approval required... | `Python` `PLpgSQL` | [Demo](https://appuctivity-agent-2026.streamlit.app) |
+| **Productivity Agent 2026** | LangGraph AI agent for task & note management, with human approval required... | `Python` `PLpgSQL` | [Demo](https://appuctivity-agent-2026.streamlit.app) |
 | **Portfolio** | A self-updating personal portfolio — reads your GitHub live and uses AI to... | `TypeScript` `CSS` `JavaScript` | [Demo](https://portfolio-omega-ten-84.vercel.app) |
 | **Multi Agent Research Platform** | Six specialised AI agents that research a question, argue about the answer,... | `Python` | [Demo](https://multi-agent-research-platform.streamlit.app) |
 | **AI Agent Fellowship 2026** | A unified Streamlit interface to chat with multiple AI models — personas, t... | `Python` | [Demo](https://ai-agent-fellowship-2026-b2wyhwrjxwapbkn67wd8ag.streamlit.app) |
-| **Blueprint Portfolio** |  | `TypeScript` `CSS` `JavaScript` | [Demo](https://blueprint-portfolio-omega.vercel.app) |
+| **Blueprint Portfolio** | &mdash; | `TypeScript` `CSS` `JavaScript` | [Demo](https://blueprint-portfolio-omega.vercel.app) |
 | **Ai Task Management System** | TaskFlow — an AI-powered, real-time task management platform: a glassmorphi... | `TypeScript` `CSS` `JavaScript` | [Demo](https://ai-task-management-system-khaki.vercel.app) |
-| **plume realtime messaging** | Plume — a real-time chat app (Next.js + Express + Socket.io + MongoDB) with... | `TypeScript` `CSS` `JavaScript` | [Demo](https://plume-realtime-messaging.vercel.app) |
-| **link shortener** | Zap — AI-powered link shortener. Paste a URL, get a tiny link with AI summa... | `JavaScript` `CSS` | [Demo](https://link-shortener-coral-zeta.vercel.app/) |
+| **Plume Realtime Messaging** | Plume — a real-time chat app (Next.js + Express + Socket.io + MongoDB) with... | `TypeScript` `CSS` `JavaScript` | [Demo](https://plume-realtime-messaging.vercel.app) |
+| **Link Shortener** | Zap — AI-powered link shortener. Paste a URL, get a tiny link with AI summa... | `JavaScript` `CSS` | [Demo](https://link-shortener-coral-zeta.vercel.app/) |
 
 <!-- PROJECTS:END -->
 
